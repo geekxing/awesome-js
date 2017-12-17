@@ -4,7 +4,7 @@ module.exports = function (shipit) {
         default: {
             workspace: '/tmp/github-monitor',
             deployTo: '/tmp/deploy_to',
-            repositoryUrl: 'https://github.com/user/repo.git',
+            repositoryUrl: 'https://github.com/geekxing/awesome-js.git',
             ignores: ['.git', 'node_modules'],
             keepReleases: 2,
             deleteOnRollback: false,
