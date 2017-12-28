@@ -5,6 +5,9 @@ module.exports = {
         this.code = code || 'internal:unknown_error';
         this.message = message || '';
     },
+    APIValueError: function (message) {
+        APIError('value:invalid', message);
+    },
     restify: (pathPrefix) => {
         // REST API前缀，默认为/api
         pathPrefix = pathPrefix || '/api/';

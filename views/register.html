@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="learn javascript by www.liaoxuefeng.com">
+    <title>欢迎注册！</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/sha1.min.js"></script>
+    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/awesome.js"></script>
+    <script>
+        function validateEmail(email) {
+            var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
+            return re.test(email.toLowerCase())
+        }
+
+        $(function() {
+            var vm = new Vue({
+                el: '#vm',
+                data: {
+                    name: '',
+                    email: '',
+                    password1: '',
+                    password2: ''
+                },
+                methods: {
+                    register: function () {
+                        var $form = $('#vm');
+                        if (! this.name.trim()) {
+                            return $form.showFormError('请输入名字');
+                        }
+                        if (! validateEmail(this.email.trim().toLowerCase())) {
+                            return $form.showFormError('请输入正确的Email地址');
+                        }
+                        if (this.password1.length < 6) {
+                            return $form.showFormError('口令长度至少为6个字符');
+                        }
+                        if (this.password1 !== this.password2) {
+                            return $form.showFormError('两次输入的口令不一致');
+                        }
+                        var email = this.email.trim().toLowerCase();
+                        $form.postJSON('/api/register', {
+                            name: this.name.trim(),
+                            email: email,
+                            passwd: CryptoJS.SHA1(email + ':' + this.password1).toString()
+                        }, function (err, r) {
+                            if (err) {
+                                return $form.showFormError(err);
+                            }
+                            return location.assign('/');
+                        });
+                    }
+                }
+            });
+            $('#vm').show();
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="form row">
+        <div class="form-horizontal col-md-offset-3" id="register_form">
+            <h3 class="form-title">REGISTER</h3>
+            <div class="col-md-9">
+                <form id="vm" v-on:submit.prevent="register">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input v-model="name" class="form-control required" type="text" placeholder="用户名" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-envelope"></i>
+                        <input v-model="email" class="form-control required" type="text" placeholder="邮箱" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input v-model="password1" class="form-control required" type="password" placeholder="密码" maxlength="8"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input v-model="password2" class="form-control required" type="password" placeholder="确认密码" maxlength="8"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block" name="submit">注册</button>
+                    </div>
+                    <div class="alert-danger hidden"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,16 +1,15 @@
 {
-  "name": "rest-hello",
+  "name": "awesome-js",
   "version": "0.0.1",
   "dependencies": {
     "koa": "2.4.1",
     "koa-bodyparser": "4.2.0",
     "koa-router": "7.3.0",
-    "nunjucks": "3.0.1",
     "mime": "2.0.3",
-    "mz": "2.7.0"
-  },
-  "devDependencies": {
-    "shipit-cli": "^3.0.0",
-    "shipit-deploy": "^2.5.1"
+    "mysql2": "^1.5.1",
+    "mz": "2.7.0",
+    "node-uuid": "^1.4.8",
+    "nunjucks": "3.0.1",
+    "sequelize": "4.28.5"
   }
 }
